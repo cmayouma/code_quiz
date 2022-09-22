@@ -1,0 +1,81 @@
+<html>
+
+<head>
+
+    <title>Questionnaire</title>
+
+    <SCRIPT language="JavaScript">
+        var nbquestions = 2;			//le nombre de questions
+        var reponse = new Array(2);		//le nombre de réponses
+        reponse[0] = "est";			//les réponses (en partant de 0!!!)
+        reponse[1] = "suis";
+        //vous pouvez rajouter : reponse[2] = "lrgelgft"; ... Attention, pensez a modifier nbquestions et reponse !!!
+
+        function correction() {
+            var score = 0;
+            for (var i = 0; i < nbquestions; i++) {
+                var proposition = document.getElementsByName("prop");
+                imput_prop = proposition[i];
+                if (imput_prop.value == reponse[i]) {
+                    score++;	//augmente le score d'1 point
+                    var images_vrai = document.getElementsByName("vrai");
+                    img_vrai = images_vrai[i];
+                    img_vrai.style.display = "inline";  			//affiche l'image "vrai"
+                    var solution = document.getElementsByName("solution");
+                    imput_solution = solution[i];
+                    imput_solution.value = "(" + reponse[i] + ")";		//affiche la solution
+                    imput_solution.style.display = "inline";		//affiche le bouton "solution"
+                    imput_solution.style.color = "#00CC00";			//colore le texte en vert
+                }
+                else {
+                    var images_faux = document.getElementsByName("faux");
+                    img_faux = images_faux[i]
+                    img_faux.style.display = "inline";			//affiche l'image "faux"
+                    var solution = document.getElementsByName("solution");
+                    imput_solution = solution[i];
+                    imput_solution.value = "(" + reponse[i] + ")";		//affiche la solution
+                    imput_solution.style.display = "inline";		//affiche le bouton "solution"
+                    imput_solution.style.color = "#FF0000";			//colore le texte en rouge
+                }
+            }
+            document.getElementById("total").value = score + "/" + nbquestions;		//affiche le score dans le boutton "total"
+            for (var i = 0; i < nbquestions; i++) {
+                var proposition = document.getElementsByName("prop");
+                imput_prop = proposition[i];
+                imput_prop.disabled = true;					//empêche la modification des données des boutons "prop"
+            }
+        }
+
+        function efface() {
+            location.reload();						//recharge la page
+            return (false);
+        }
+    </script>
+
+</head>
+
+<body>
+
+    <p>Compléter avec le verbe conjugué :</p>
+
+    <form id="questions">
+        <p><img name="vrai" border="0" src="images/vrai.jpg" width="20" height="20" id="image1_1"
+                style="display:none"><img name="faux" border="0" src="images/faux.jpg" width="20" height="20"
+                id="image1_2" style="display:none">&nbsp;&nbsp;&nbsp;&nbsp;1.Il <input name="prop" type="text"
+                id="button1" size="10"><input name="solution" style="display:none;font-weight:bold;border:none"
+                type="text" id="button1" size="5" readonly="readonly"> (être) pompier.</p>
+        <p><img name="vrai" border="0" src="images/vrai.jpg" width="20" height="20" id="image2_1"
+                style="display:none"><img name="faux" border="0" src="images/faux.jpg" width="20" height="20"
+                id="image2_2" style="display:none">&nbsp;&nbsp;&nbsp;&nbsp;2.Je <input name="prop" type="text"
+                id="button2" size="10"><input name="solution" style="display:none;font-weight:bold;border:none"
+                type="text" id="button1" size="5" readonly="readonly"> (être) sous la douche.</p>
+    </form>
+    <form id="questionnaire">
+        <p><input id="corriger" type="button" value="CORRIGER" onClick="correction()">
+            <input id="effacer" type="button" value="EFFACER" onClick="efface()">
+        </p>
+        <p>Votre score : <input type="text" id="total" readonly="readonly" size="1"></p>
+    </form>
+</body>
+
+</html>
